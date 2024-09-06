@@ -15,8 +15,7 @@ namespace DemoKeywordDriven.ExcelReader
 
 
         #region Fields
-
-        private ExcelPackage _package;
+        private static ExcelPackage _package { get; set; }
 
         #endregion
 
@@ -28,13 +27,16 @@ namespace DemoKeywordDriven.ExcelReader
         }
         public ExcelReaderHelper(string fileName) : this(new FileInfo(fileName))
         {
-
+            
         }
 
         public ExcelReaderHelper(FileInfo fileInfo)
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             _package = new ExcelPackage(fileInfo);
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            _package.Workbook.Protection.LockWindows = false;
+            _package.Workbook.Protection.LockStructure = false;
+
         }
 
 
@@ -109,12 +111,16 @@ namespace DemoKeywordDriven.ExcelReader
             _package.Workbook.Worksheets[sheetName].Cells[row, column].AutoFitColumns();
         }
 
+
+
+        #endregion
+
+        #region Dispose
         public void Dispose()
         {
             _package.Dispose();
         }
 
         #endregion
-
     }
 }

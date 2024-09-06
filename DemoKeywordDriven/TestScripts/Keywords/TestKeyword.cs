@@ -1,4 +1,5 @@
-﻿using DemoKeywordDriven.Keyword;
+﻿using DemoKeywordDriven.ExcelReader;
+using DemoKeywordDriven.Keyword;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,10 @@ namespace DemoKeywordDriven.TestScripts.Keywords
         [Test]
         public void Test2()
         {
+          
             var keyDataEngine = new DataEngine();
-            keyDataEngine.ExecuteScript(@"C:\Users\PC\Desktop\Keyword.xlsx", "TestSuite", "TC01");
+            keyDataEngine.ExecuteScript(@"C:\Users\PC\Desktop\Keyword2.xlsx", "TestSuite", "TC01");
+
             //Assert.Pass();
         }
     }
