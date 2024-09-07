@@ -34,8 +34,8 @@ namespace DemoKeywordDriven.ExcelReader
         {
             _package = new ExcelPackage(fileInfo);
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            _package.Workbook.Protection.LockWindows = false;
-            _package.Workbook.Protection.LockStructure = false;
+          
+
 
         }
 
@@ -94,9 +94,14 @@ namespace DemoKeywordDriven.ExcelReader
             return count;
         }
 
-        public void SaveSheet(string fileName = "")
+        public void SaveSheet(string filePassword)
         {
-            _package.Save(fileName);
+            _package.Save(filePassword);
+        }
+
+        public void SaveSheet()
+        {
+            _package.Save();
         }
 
         public void WriteToCell(string sheetName, int row, int column, string value)

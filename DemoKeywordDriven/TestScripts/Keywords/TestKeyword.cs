@@ -22,7 +22,7 @@ namespace DemoKeywordDriven.TestScripts.Keywords
         {
           
             var keyDataEngine = new DataEngine();
-            keyDataEngine.ExecuteScript(@"C:\Users\PC\Desktop\Keyword2.xlsx", "TestSuite", "TC01");
+            keyDataEngine.ExecuteScript(@"C:\Users\PC\Desktop\KeywordTwo.xlsx", "TestSuite", "TC01");
 
             //Assert.Pass();
         }

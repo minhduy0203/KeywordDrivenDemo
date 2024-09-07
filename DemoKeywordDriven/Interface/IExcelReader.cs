@@ -17,7 +17,10 @@ namespace DemoKeywordDriven.Interface
         public abstract int GetAllSheetCount();
         public abstract IDictionary<string, int> GetTestCaseRowNo(string sheet, int column = 1);
 
-        public abstract void SaveSheet(string fileName = "");
+        public abstract void SaveSheet(string filePassword = "");
+
+        public void SaveSheet();
+       
         public abstract void WriteToCell(string sheetName, int row, int column, string value);
 
 
