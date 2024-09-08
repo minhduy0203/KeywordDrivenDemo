@@ -23,7 +23,7 @@ namespace DemoKeywordDriven.Keyword
         private readonly int _resultCol;
         private readonly int _exceptionCol;
 
-        public DataEngine(int keywordCol = 3, int locatorTypeCol = 4, int locatorValueCol = 5, int parameterCol = 6, int resultCol = 7, int exceptionCol = 8)
+        public DataEngine(int keywordCol = 4, int locatorTypeCol = 5, int locatorValueCol = 6, int parameterCol = 7, int resultCol = 8, int exceptionCol = 9)
         {
             _keywordCol = keywordCol;
             _locatorTypeCol = locatorTypeCol;
@@ -56,11 +56,10 @@ namespace DemoKeywordDriven.Keyword
             switch (keyword)
             {
                 case "Click":
-                    GenericHelper.GetElement(GetElementLocator(locatorType, locatorValue)).Click();
-                    //ButtonHelper.ClickButton(GetElementLocator(locatorType, locatorValue));
+                   ButtonHelper.ClickButton(GetElementLocator(locatorType,locatorValue));
                     break;
                 case "SendKeys":
-                    //TextBoxHelper.TypeInTextBox(GetElementLocator(locatorType, locatorValue), args[0]);
+                    TextBoxHelper.TypeInTextBox(GetElementLocator(locatorType, locatorValue), args[0]);
                     break;
                 case "Select":
                     //ComboBoxHelper.SelectElementByValue(GetElementLocator(locatorType, locatorValue), args[0]);
@@ -70,8 +69,10 @@ namespace DemoKeywordDriven.Keyword
                     //TimeSpan.FromSeconds(50);
                     break;
                 case "Navigate":
-                    ObjectRepository.Driver.Navigate().GoToUrl(args[0]);
-                    //NavigationHelper.NavigateToUrl(args[0]);
+                    NavigationHelper.NavigateToUrl(args[0]);
+                    break;
+                case "ClickByLink":
+                    LinkHelper.ClickLink(GetElementLocator(locatorType, locatorValue));
                     break;
                 default:
                     throw new NoSuchKeywordFoundException("Keyword Not Found : " + keyword);

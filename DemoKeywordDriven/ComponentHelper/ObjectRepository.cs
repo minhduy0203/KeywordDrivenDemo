@@ -10,7 +10,7 @@ namespace DemoKeywordDriven.ComponentHelper
 {
     public class ObjectRepository
     {
-        public static IWebDriver Driver = new ChromeDriver();
+        public static IWebDriver Driver;
         
     }
 }
