@@ -66,12 +66,12 @@ namespace DemoKeywordDriven.ExcelReader
             throw new NotImplementedException();
         }
 
-        public IDictionary<string, int> GetTestCaseRowNo(string sheet, int column = 1)
+        public IDictionary<string, int> GetTestCaseRowNo(string sheet, int column = 3)
         {
             var totalRows = GetTotalRows(sheet);
             var testCaseId = new Dictionary<string, int>();
 
-            for (var i = 2; i < totalRows; i++)
+            for (var i = 2; i <= totalRows; i++)
             {
                 var celValue = GetCellData(sheet, i, column);
                 if (!testCaseId.ContainsKey((string)celValue))
@@ -91,7 +91,7 @@ namespace DemoKeywordDriven.ExcelReader
                 count++;
             }
 
-            return count;
+            return --count;
         }
 
         public void SaveSheet(string filePassword)

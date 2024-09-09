@@ -1,8 +1,10 @@
 ﻿using DemoKeywordDriven.ComponentHelper;
 using DemoKeywordDriven.Configurations;
 using DemoKeywordDriven.ExcelReader;
+using DemoKeywordDriven.Interface;
 using DemoKeywordDriven.Keyword;
 using log4net;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -23,18 +25,27 @@ namespace DemoKeywordDriven.TestScripts.Keywords
         [SetUp]
         public void SetUp()
         {
-            ScriptUrl = ConfigurationManager.AppSettings[ConfigKeys.ScriptUrl];
-            Logger.Info("Set up script url: " + ScriptUrl ?? "None");
+            try
+            {
+                ScriptUrl = ConfigurationManager.AppSettings[ConfigKeys.ScriptUrl];
+                Logger.Info("Set up script url: " + ScriptUrl ?? "None");
+            }
+            catch (Exception)
+            {
+                Logger.Error(e.StackTrace);
+                throw;
+            }
+          
 
         }
 
-        [Test]
-        public void Test2()
+        [TestCaseSource(nameof(GetTestCases))]
+        public void Test2(string testCaseId)
         {
             try
             {
                 var keyDataEngine = new DataEngine();
-                keyDataEngine.ExecuteScript(ScriptUrl, "TestSuite", "TC01");
+                keyDataEngine.ExecuteScript(ScriptUrl, "TestSuite", testCaseId);
             }
             catch (Exception e)
             {
@@ -43,6 +54,21 @@ namespace DemoKeywordDriven.TestScripts.Keywords
 
             }
 
+        }
+
+
+        public static IEnumerable<string> GetTestCases()
+        {
+            string ScriptUrl = ConfigurationManager.AppSettings[ConfigKeys.ScriptUrl];
+            using (var excelUtility = new ExcelReaderHelper(ScriptUrl))
+            {
+                var TestCases = excelUtility.GetTestCaseRowNo("TestSuite");
+                foreach (var testCase in TestCases)
+                {
+                    yield return testCase.Key;
+                }
+
+            }
         }
 
 

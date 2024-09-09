@@ -56,7 +56,7 @@ namespace DemoKeywordDriven.Keyword
             switch (keyword)
             {
                 case "Click":
-                   ButtonHelper.ClickButton(GetElementLocator(locatorType,locatorValue));
+                    ButtonHelper.ClickButton(GetElementLocator(locatorType, locatorValue));
                     break;
                 case "SendKeys":
                     TextBoxHelper.TypeInTextBox(GetElementLocator(locatorType, locatorValue), args[0]);
@@ -79,41 +79,38 @@ namespace DemoKeywordDriven.Keyword
             }
         }
 
-        public void ExecuteScript(string xlPath, string sheetName, string childSheet)
+        public void ExecuteScript(string xlPath, string sheetName, string testCaseId)
         {
             //Testsuite
             using (var excelUtility = new ExcelReaderHelper(xlPath))
             {
                 var totalRow = excelUtility.GetTotalRows(sheetName);
-                var testCaseId = excelUtility.GetTestCaseRowNo(childSheet);
-                for (var i = 2; i < totalRow; i++)
+                var testCaseRowNo = excelUtility.GetTestCaseRowNo(sheetName);
+                var i = testCaseRowNo[testCaseId];
+                try
                 {
-                    try
-                    {
-                        if (excelUtility.GetCellData(sheetName, i, 1).Equals(string.Empty))
-                            break;
+                    if (excelUtility.GetCellData(sheetName, i, 1).Equals(string.Empty))
+                        return;
 
-                        if (!"Yes".Equals((string)excelUtility.GetCellData(sheetName, i, 4), StringComparison.OrdinalIgnoreCase))
-                            continue;
-                        string tcIdCell = (string)excelUtility.GetCellData(sheetName, i, 3);
-                        var tcIdIndex = testCaseId[tcIdCell];
-                        ExecuteScript(excelUtility, childSheet, tcIdCell, tcIdIndex);
-                        excelUtility.WriteToCell(sheetName, i, 5, "Pass");
-                    }
-                    catch (Exception)
-                    {
-                        excelUtility.WriteToCell(sheetName, i, 5, "Fail");
-                    }
+                    if (!"Yes".Equals((string)excelUtility.GetCellData(sheetName, i, 4), StringComparison.OrdinalIgnoreCase))
+                        return;
+
+                    ExecuteScript(excelUtility, testCaseId);
+                    excelUtility.WriteToCell(sheetName, i, 5, "Pass");
+                }
+                catch (Exception)
+                {
+                    excelUtility.WriteToCell(sheetName, i, 5, "Fail");
                 }
                 excelUtility.SaveSheet();
             }
         }
 
-        public void ExecuteScript(ExcelReaderHelper excelUtility, string sheetName, string tcId, int tcIdIndex)
+        public void ExecuteScript(ExcelReaderHelper excelUtility, string sheetName)
         {
             //Test case steps
-            var i = tcIdIndex;
-            while (((string)excelUtility.GetCellData(sheetName, i, 1)).Contains(tcId))
+            var i = 2;
+            while (((string)excelUtility.GetCellData(sheetName, i, 1)).Contains(sheetName))
             {
                 try
                 {

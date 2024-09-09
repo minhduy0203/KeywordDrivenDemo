@@ -19,6 +19,7 @@ namespace DemoKeywordDriven.TestScripts.Keywords
         public void SetUp()
         {
             ObjectRepository.Driver = new ChromeDriver();
+            ObjectRepository.Driver.Manage().Cookies.DeleteAllCookies();
             Logger.Info("Open driver");
         }
 

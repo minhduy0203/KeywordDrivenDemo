@@ -12,7 +12,7 @@ namespace DemoKeywordDriven.ComponentHelper
     {
 
         public static IWebElement webElement;
-        private static ILog Logger = Log4NetHelper.GetLogger(typeof(TextBoxHelper));
+        private static ILog Logger = Log4NetHelper.GetXmlLogger(typeof(TextBoxHelper));
         public static void TypeInTextBox(By locator, string text)
         {
             webElement = GenericHelper.GetElement(locator);

@@ -9,7 +9,7 @@ namespace DemoKeywordDriven.ComponentHelper
 {
     public class NavigationHelper
     {
-        private static readonly ILog Logger = Log4NetHelper.GetLogger(typeof(NavigationHelper));
+        private static readonly ILog Logger = Log4NetHelper.GetXmlLogger(typeof(NavigationHelper));
         public static void NavigateToUrl(string url)
         {
             ObjectRepository.Driver.Navigate().GoToUrl(url);
