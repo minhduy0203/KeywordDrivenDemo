@@ -105,6 +105,7 @@ namespace DemoKeywordDriven.Keyword
                 catch (Exception)
                 {
                     excelUtility.WriteToCell(sheetName, i, 5, "Fail");
+                    excelUtility.SaveSheet();
                     throw;
                 }
                 excelUtility.SaveSheet();

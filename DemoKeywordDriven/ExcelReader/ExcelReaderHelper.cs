@@ -32,8 +32,8 @@ namespace DemoKeywordDriven.ExcelReader
 
         public ExcelReaderHelper(FileInfo fileInfo)
         {
-            _package = new ExcelPackage(fileInfo);
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            _package = new ExcelPackage(fileInfo);
           
 
 
