@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using DemoKeywordDriven.Interface;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace DemoKeywordDriven.ComponentHelper
     public class ObjectRepository
     {
         public static IWebDriver Driver;
+        public static IConfig Config;
         
     }
 }

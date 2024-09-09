@@ -11,5 +11,7 @@ namespace DemoKeywordDriven.Configurations
 
         public const string ScriptUrl = "ScriptUrl";
         public const string Browser = "Browser";
+        public const string PageLoadTimeout = "PageLoadTimeout";
+        public const string ElementLoadTimeout = "ElementLoadTimeout";
     }
 }

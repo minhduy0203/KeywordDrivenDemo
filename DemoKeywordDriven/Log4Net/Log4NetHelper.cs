@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DemoKeywordDriven.ComponentHelper
+namespace DemoKeywordDriven.Log4Net
 {
     public class Log4NetHelper
     {

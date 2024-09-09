@@ -2,6 +2,8 @@
 using DemoKeywordDriven.CustomException;
 using DemoKeywordDriven.ExcelReader;
 using DemoKeywordDriven.Interface;
+using DemoKeywordDriven.Log4Net;
+using log4net;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
@@ -16,6 +18,7 @@ namespace DemoKeywordDriven.Keyword
     internal class DataEngine
     {
         //number of column in excel
+        private ILog Logger = Log4NetHelper.GetXmlLogger(typeof(DataEngine));
         private readonly int _keywordCol;
         private readonly int _locatorTypeCol;
         private readonly int _locatorValueCol;
@@ -44,9 +47,10 @@ namespace DemoKeywordDriven.Keyword
                     return By.Id(locatorValue);
                 case "Linktext":
                     return By.LinkText(locatorValue);
+                case "XPath":
+                    return By.XPath(locatorValue);
                 default:
-                    return By.Id(locatorValue);
-
+                    throw new NoSuchLocatorFoundException();
 
             }
         }
@@ -101,6 +105,7 @@ namespace DemoKeywordDriven.Keyword
                 catch (Exception)
                 {
                     excelUtility.WriteToCell(sheetName, i, 5, "Fail");
+                    throw;
                 }
                 excelUtility.SaveSheet();
             }
@@ -130,6 +135,7 @@ namespace DemoKeywordDriven.Keyword
                 {
                     excelUtility.WriteToCell(sheetName, i, _resultCol, "Fail");
                     excelUtility.WriteToCell(sheetName, i, _exceptionCol, ex.Message);
+                    Logger.Error(ex.StackTrace);
                     throw;
                 }
                 i++;
