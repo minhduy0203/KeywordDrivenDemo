@@ -27,14 +27,14 @@ namespace DemoKeywordDriven.ExcelReader
         }
         public ExcelReaderHelper(string fileName) : this(new FileInfo(fileName))
         {
-            
+
         }
 
         public ExcelReaderHelper(FileInfo fileInfo)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             _package = new ExcelPackage(fileInfo);
-          
+
 
 
         }
@@ -116,7 +116,13 @@ namespace DemoKeywordDriven.ExcelReader
             _package.Workbook.Worksheets[sheetName].Cells[row, column].AutoFitColumns();
         }
 
-
+        public bool IsWorkSheetFound(string sheetName)
+        {
+            var workSheet = _package.Workbook.Worksheets[sheetName];
+            if (workSheet != null)
+                return true;
+            return false;
+        }
 
         #endregion
 

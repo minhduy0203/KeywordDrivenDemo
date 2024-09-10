@@ -23,6 +23,8 @@ namespace DemoKeywordDriven.Interface
        
         public abstract void WriteToCell(string sheetName, int row, int column, string value);
 
+        public abstract bool IsWorkSheetFound(string sheetName);
+      
 
 
 

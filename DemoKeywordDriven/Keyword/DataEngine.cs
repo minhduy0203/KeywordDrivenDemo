@@ -60,13 +60,13 @@ namespace DemoKeywordDriven.Keyword
             switch (keyword)
             {
                 case "Click":
-                    ButtonHelper.ClickButton(GetElementLocator(locatorType, locatorValue));
+                    GenericHelper.Click(GetElementLocator(locatorType, locatorValue));
                     break;
                 case "SendKeys":
                     TextBoxHelper.TypeInTextBox(GetElementLocator(locatorType, locatorValue), args[0]);
                     break;
                 case "Select":
-                    //ComboBoxHelper.SelectElementByValue(GetElementLocator(locatorType, locatorValue), args[0]);
+                    ComboBoxHelper.SelectElementByValue(GetElementLocator(locatorType, locatorValue), args[0]);
                     break;
                 case "WaitForEle":
                     //GenericHelper.WaitForWebElementInPage(GetElementLocator(locatorType, locatorValue),
@@ -93,6 +93,9 @@ namespace DemoKeywordDriven.Keyword
                 var i = testCaseRowNo[testCaseId];
                 try
                 {
+                    if (!excelUtility.IsWorkSheetFound(testCaseId))
+                        throw new NotFoundException("Not found worksheet");
+
                     if (excelUtility.GetCellData(sheetName, i, 1).Equals(string.Empty))
                         return;
 
@@ -102,9 +105,11 @@ namespace DemoKeywordDriven.Keyword
                     ExecuteScript(excelUtility, testCaseId);
                     excelUtility.WriteToCell(sheetName, i, 5, "Pass");
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     excelUtility.WriteToCell(sheetName, i, 5, "Fail");
+                    excelUtility.WriteToCell(sheetName, i, 6, ex.Message);
+
                     excelUtility.SaveSheet();
                     throw;
                 }
